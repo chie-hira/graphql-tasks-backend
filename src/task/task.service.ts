@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Task } from './models/task.model';
-import { TaskInput } from './dto/createTask.input.dto';
+import { CreateTaskInput } from './dto/createTask.input.dto';
 
 @Injectable()
 export class TaskService {
@@ -19,13 +19,22 @@ export class TaskService {
         return this.tasks
     }
 
-    createTask(task: TaskInput): Task {
+    createTask(createTaskInput: CreateTaskInput): Task {
         const newTask = new Task()
+
         newTask.id = this.tasks.length + 1
-        newTask.name = task.name
-        newTask.dueDate = task.dueDate
+        newTask.name = createTaskInput.name
+        newTask.dueDate = createTaskInput.dueDate
         newTask.status = 'NOT_STARTED'
-        newTask.description = task.description
+        newTask.description = createTaskInput.description
+
+        // 分割代入でもOK
+        // const { name, dueDate, description } = createTaskInput
+        // newTask.name = name
+        // newTask.dueDate = dueDate
+        // newTask.status = 'NOT_STARTED'
+        // newTask.description = description
+        
         this.tasks.push(newTask)
         return newTask
     }

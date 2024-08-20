@@ -1,7 +1,7 @@
 import { Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Task } from './models/task.model';
 import { TaskService } from './task.service';
-import { TaskInput } from './dto/createTask.input.dto';
+import { CreateTaskInput } from './dto/createTask.input.dto';
 import { Args } from '@nestjs/graphql';
 
 @Resolver()
@@ -23,7 +23,7 @@ export class TaskResolver {
     //     return this.taskService.createTask(task)
     // }
     @Mutation(() => Task)
-    createTask(@Args('task') task: TaskInput,): Task {
+    createTask(@Args('createTaskInput') task: CreateTaskInput,): Task {
         return this.taskService.createTask(task);
     }
 }
