@@ -3,7 +3,7 @@
 # ------------------------------------------------------
 
 type Task {
-  id: Float!
+  id: Int!
   name: String!
   dueDate: String!
   status: String!
