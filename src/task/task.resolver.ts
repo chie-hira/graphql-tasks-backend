@@ -1,6 +1,8 @@
-import { Query, Resolver } from '@nestjs/graphql';
+import { Mutation, Query, Resolver } from '@nestjs/graphql';
 import { Task } from './models/task.model';
 import { TaskService } from './task.service';
+import { TaskInput } from './dto/createTask.input.dto';
+import { Args } from '@nestjs/graphql';
 
 @Resolver()
 export class TaskResolver {
@@ -14,5 +16,14 @@ export class TaskResolver {
     // Task[]はtypescriptの型定義
     getTasks(): Task[] {
         return this.taskService.getTasks()
+    }
+
+    // @Mutation(() => Task)
+    // createTask(task: Task): Task {
+    //     return this.taskService.createTask(task)
+    // }
+    @Mutation(() => Task)
+    createTask(@Args('task') task: TaskInput,): Task {
+        return this.taskService.createTask(task);
     }
 }

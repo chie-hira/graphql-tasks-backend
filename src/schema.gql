@@ -13,3 +13,13 @@ type Task {
 type Query {
   getTasks: [Task]!
 }
+
+type Mutation {
+  createTask(task: TaskInput!): Task!
+}
+
+input TaskInput {
+  name: String!
+  dueDate: String!
+  description: String
+}
