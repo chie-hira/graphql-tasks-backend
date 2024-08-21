@@ -4,8 +4,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { TaskModule } from './task/task.module';
-import { UserResolver } from './user/user.resolver';
-import { UserService } from './user/user.service';
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -30,6 +28,5 @@ import { UserModule } from './user/user.module';
     TaskModule,
     UserModule
   ],
-  providers: [UserResolver, UserService],
 })
 export class AppModule {}
