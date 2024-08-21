@@ -10,12 +10,14 @@ import { TaskModule } from './task/task.module';
     TypeOrmModule.forRoot({
       type: 'mysql',          // 使用するデータベースのタイプ
       host: 'localhost',      // データベースのホスト
-      port: 3306,             // データベースのポート
-      username: 'user',       // データベースのユーザー名
-      password: 'password',   // データベースのパスワード
-      database: 'sample',    // 接続するデータベース名
-      entities: [__dirname + '/**/*.model{.ts,.js}'], // エンティティのパス
-      synchronize: true,      // アプリケーションを再起動するたびにエンティティを同期
+      port: 3306,
+      username: 'user',
+      password: 'password',
+      database: 'sample',
+      entities: [__dirname + '/**/*.entity{.ts,.js}'], // エンティティのパス
+      synchronize: false,
+      // アプリケーションを再起動するたびにエンティティを同期
+      // エンティティ名を修正したとき、古いエンティティ名のテーブルがそのまま残るため、falseにしてmigrateを使う
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,

@@ -1,5 +1,5 @@
 import { Mutation, Query, Resolver } from '@nestjs/graphql';
-import { Task } from './models/task.model';
+import { TaskModel } from './models/task.model';
 import { TaskService } from './task.service';
 import { CreateTaskInput } from './dto/createTask.input.dto';
 import { Args } from '@nestjs/graphql';
@@ -8,15 +8,15 @@ import { Args } from '@nestjs/graphql';
 export class TaskResolver {
     constructor(private readonly taskService: TaskService) {}
 
-    @Query(() => [Task])
+    @Query(() => [TaskModel])
     async getTasks() {
         return this.taskService.getTasks();
     }
 
-    @Mutation(() => Task)
+    @Mutation(() => TaskModel)
     async createTask(
         @Args('createTaskInput') task: CreateTaskInput,
-        ): Promise<Task> {
+        ): Promise<TaskModel> {
         return this.taskService.createTask(task);
     }
 }

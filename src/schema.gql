@@ -2,7 +2,7 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Task {
+type TaskModel {
   id: Int!
   name: String!
   dueDate: String!
@@ -11,11 +11,11 @@ type Task {
 }
 
 type Query {
-  getTasks: [Task!]!
+  getTasks: [TaskModel!]!
 }
 
 type Mutation {
-  createTask(createTaskInput: CreateTaskInput!): Task!
+  createTask(createTaskInput: CreateTaskInput!): TaskModel!
 }
 
 input CreateTaskInput {
