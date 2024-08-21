@@ -1,4 +1,5 @@
 import { Field, Int, ObjectType } from "@nestjs/graphql";
+import { TaskStatus } from "../enums/task.enum";
 
 @ObjectType()
 export class TaskModel {
@@ -13,10 +14,16 @@ export class TaskModel {
     dueDate: string;
 
     @Field()
-    status: 'NOT_STARTED' | 'IN_PROGRESS' | 'COMPLETED';
+    status: TaskStatus;
 
     //   オプション
     //   @Field({ nullable: true, name: 'desc', description: 'フィールドの説明', defaultValue: 'No description' })
     @Field({ nullable: true })
     description?: string;
+
+    @Field()
+    createdAt: Date;
+
+    @Field()
+    updatedAt: Date;
 }
