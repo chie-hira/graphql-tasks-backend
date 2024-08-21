@@ -8,22 +8,15 @@ import { Args } from '@nestjs/graphql';
 export class TaskResolver {
     constructor(private readonly taskService: TaskService) {}
 
-    // [Task]はgraphqlの型定義
-    // nullable: 'items'は配列がnullの場合、nullを返す
-    // nullable: 'itemsAndList'は配列がnullの場合、空の配列を返す
-    // @Query(() => [Task], { nullable: 'itemsAndList', name: 'tasks' })
-    @Query(() => [Task], { nullable: 'items' })
-    // Task[]はtypescriptの型定義
-    getTasks(): Task[] {
-        return this.taskService.getTasks()
+    @Query(() => [Task])
+    async getTasks() {
+        return this.taskService.getTasks();
     }
 
-    // @Mutation(() => Task)
-    // createTask(task: Task): Task {
-    //     return this.taskService.createTask(task)
-    // }
     @Mutation(() => Task)
-    createTask(@Args('createTaskInput') task: CreateTaskInput,): Task {
+    async createTask(
+        @Args('createTaskInput') task: CreateTaskInput,
+        ): Promise<Task> {
         return this.taskService.createTask(task);
     }
 }
