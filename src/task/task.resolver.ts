@@ -18,20 +18,20 @@ export class TaskResolver {
     async createTask(
         @Args('createTaskInput') createTaskInput: CreateTaskInput,
         ): Promise<TaskModel> {
-        return this.taskService.createTask(createTaskInput);
+        return await this.taskService.createTask(createTaskInput);
     }
 
     @Mutation(() => TaskModel)
     async updateTask(
         @Args('updateTaskInput') updateTaskInput: UpdateTaskInput,
         ): Promise<TaskModel> {
-        return this.taskService.updateTask(updateTaskInput);
+        return await this.taskService.updateTask(updateTaskInput);
     }
 
     @Mutation(() => TaskModel)
     async deleteTask(
         @Args('id', { type: () => Int }) id: number,
         ): Promise<TaskModel> {
-        return this.taskService.deleteTask(id);
+        return await this.taskService.deleteTask(id);
     }
 }
