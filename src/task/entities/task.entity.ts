@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { TaskStatus } from '../enums/task.enum';
+import { User } from './user.entity';
 
 @Entity('tasks')
 export class Task {
@@ -23,4 +24,8 @@ export class Task {
 
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
     updatedAt: Date;
+
+    @ManyToOne(() => User, user => user.tasks, { onDelete: 'CASCADE' })
+    // @ManyToOne(() => User, user => user.tasks, { onDelete: 'CASCADE', nullable: false })
+    user: User;
 }
