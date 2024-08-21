@@ -4,6 +4,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { TaskModule } from './task/task.module';
+import { UserResolver } from './user/user.resolver';
+import { UserService } from './user/user.service';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -24,7 +27,9 @@ import { TaskModule } from './task/task.module';
       playground: true,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql')
     }),
-    TaskModule
+    TaskModule,
+    UserModule
   ],
+  providers: [UserResolver, UserService],
 })
 export class AppModule {}
