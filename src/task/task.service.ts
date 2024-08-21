@@ -3,8 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { TaskModel } from './models/task.model';
 import { Task } from './entities/task.entity';
-import { TaskStatus } from './enums/task.enum';
 import { CreateTaskInput } from './dto/createTask.input.dto';
+import { UpdateTaskInput } from './dto/updateTask.input.dto';
 
 @Injectable()
 export class TaskService {
@@ -18,13 +18,30 @@ export class TaskService {
     }
 
     async createTask(createTaskInput: CreateTaskInput): Promise<TaskModel> {
-        const newTask = this.taskRepository.create({
-            name: createTaskInput.name,
-            dueDate: createTaskInput.dueDate,
-            status: TaskStatus.NOT_STARTED,
-            description: createTaskInput.description,
+        const { name, dueDate, description } = createTaskInput;
+        return await this.taskRepository.create({
+            name,
+            dueDate,
+            description,
+        });
+    }
+
+    async updateTask(updateTaskInput: UpdateTaskInput): Promise<TaskModel> {
+        const { id, name, dueDate, status, description } = updateTaskInput;
+
+        await this.taskRepository.update(id, {
+            name,
+            dueDate,
+            status,
+            description,
         });
 
-        return await this.taskRepository.save(newTask);
+        const updatedTask = await this.taskRepository.findOne({ where: { id } });
+
+        if (updatedTask) {
+            return updatedTask;
+        } else {
+            throw new Error('Task not found');
+        }
     }
 }

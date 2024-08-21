@@ -1,5 +1,4 @@
 import { DataSource } from 'typeorm';
-// import { Task } from './task/models/task.model';
 
 export const AppDataSource = new DataSource({
     type: 'mysql',
