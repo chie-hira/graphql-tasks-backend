@@ -24,6 +24,7 @@ type Query {
 type Mutation {
   createTask(createTaskInput: CreateTaskInput!): TaskModel!
   updateTask(updateTaskInput: UpdateTaskInput!): TaskModel!
+  deleteTask(id: Int!): TaskModel!
 }
 
 input CreateTaskInput {

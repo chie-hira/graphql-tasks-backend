@@ -19,11 +19,13 @@ export class TaskService {
 
     async createTask(createTaskInput: CreateTaskInput): Promise<TaskModel> {
         const { name, dueDate, description } = createTaskInput;
-        return await this.taskRepository.create({
+        const newTask = this.taskRepository.create({
             name,
             dueDate,
             description,
         });
+
+        return await this.taskRepository.save(newTask);
     }
 
     async updateTask(updateTaskInput: UpdateTaskInput): Promise<TaskModel> {
@@ -40,6 +42,17 @@ export class TaskService {
 
         if (updatedTask) {
             return updatedTask;
+        } else {
+            throw new Error('Task not found');
+        }
+    }
+
+    async deleteTask(id: number): Promise<TaskModel> {
+        const deleteTask = (await this.taskRepository.findOne({ where: { id } }));
+        const deleteResult = await this.taskRepository.delete(id);
+
+        if (deleteResult.affected) {
+            return deleteTask;
         } else {
             throw new Error('Task not found');
         }

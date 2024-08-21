@@ -12,7 +12,7 @@ export class Task {
     @Column()
     dueDate: string;
 
-    @Column()
+    @Column({default: TaskStatus.NOT_STARTED})
     status: TaskStatus;
 
     @Column({ nullable: true })
