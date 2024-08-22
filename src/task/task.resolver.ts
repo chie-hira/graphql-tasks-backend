@@ -4,17 +4,21 @@ import { TaskService } from './task.service';
 import { CreateTaskInput } from './dto/createTask.input.dto';
 import { Args } from '@nestjs/graphql';
 import { UpdateTaskInput } from './dto/updateTask.input.dto';
+import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @Resolver()
 export class TaskResolver {
     constructor(private readonly taskService: TaskService) {}
 
     @Query(() => [TaskModel])
+    @UseGuards(JwtAuthGuard)
     async getTasks(): Promise<TaskModel[]> {
         return this.taskService.getTasks();
     }
 
     @Mutation(() => TaskModel)
+    @UseGuards(JwtAuthGuard)
     async createTask(
         @Args('createTaskInput') createTaskInput: CreateTaskInput,
         ): Promise<TaskModel> {
@@ -22,6 +26,7 @@ export class TaskResolver {
     }
 
     @Mutation(() => TaskModel)
+    @UseGuards(JwtAuthGuard)
     async updateTask(
         @Args('updateTaskInput') updateTaskInput: UpdateTaskInput,
         ): Promise<TaskModel> {
@@ -29,6 +34,7 @@ export class TaskResolver {
     }
 
     @Mutation(() => TaskModel)
+    @UseGuards(JwtAuthGuard)
     async deleteTask(
         @Args('id', { type: () => Int }) id: number,
         ): Promise<TaskModel> {
