@@ -25,7 +25,6 @@ export class Task {
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
     updatedAt: Date;
 
-    @ManyToOne(() => User, user => user.tasks, { onDelete: 'CASCADE' })
-    // @ManyToOne(() => User, user => user.tasks, { onDelete: 'CASCADE', nullable: false })
+    @ManyToOne(() => User, user => user.tasks, { onDelete: 'CASCADE', nullable: false })
     user: User;
 }

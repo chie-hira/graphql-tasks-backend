@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { TaskModel } from './models/task.model';
 import { Task } from './entities/task.entity';
+import { User } from 'src/user/entities/user.entity';
 import { CreateTaskInput } from './dto/createTask.input.dto';
 import { UpdateTaskInput } from './dto/updateTask.input.dto';
 
@@ -11,18 +12,32 @@ export class TaskService {
     constructor(
         @InjectRepository(Task)
         private taskRepository: Repository<Task>,
+        @InjectRepository(User)
+        private readonly userRepository: Repository<User>,
     ) {}
 
-    async getTasks(): Promise<TaskModel[]> {
-        return await this.taskRepository.find();
+    async getAllTasks(): Promise<TaskModel[]> {
+        return await this.taskRepository.find({ relations: ['user'] });
+    }
+
+    async getTasks(userId: number): Promise<TaskModel[]> {
+        const user = await this.userRepository.findOne({ where: { id: userId } });
+
+        return await this.taskRepository.find({
+            relations: ['user'],
+            where: { user: user }
+        });
     }
 
     async createTask(createTaskInput: CreateTaskInput): Promise<TaskModel> {
-        const { name, dueDate, description } = createTaskInput;
+        const { name, dueDate, description, userId } = createTaskInput;
+        const user = await this.userRepository.findOne({ where: { id: userId } });
+        
         const newTask = this.taskRepository.create({
             name,
             dueDate,
             description,
+            user,
         });
 
         return await this.taskRepository.save(newTask);

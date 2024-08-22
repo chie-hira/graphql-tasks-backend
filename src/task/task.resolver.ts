@@ -13,8 +13,14 @@ export class TaskResolver {
 
     @Query(() => [TaskModel])
     @UseGuards(JwtAuthGuard)
-    async getTasks(): Promise<TaskModel[]> {
-        return this.taskService.getTasks();
+    async getAllTasks(): Promise<TaskModel[]> {
+        return this.taskService.getAllTasks();
+    }
+
+    @Query(() => [TaskModel])
+    @UseGuards(JwtAuthGuard)
+    async getTasks(@Args('userId', { type: () => Int}) userId: number): Promise<TaskModel[]> {
+        return this.taskService.getTasks(userId);
     }
 
     @Mutation(() => TaskModel)
