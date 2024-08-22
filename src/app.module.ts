@@ -5,6 +5,9 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { TaskModule } from './task/task.module';
 import { UserModule } from './user/user.module';
+import { AuthResolver } from './auth/auth.resolver';
+import { AuthService } from './auth/auth.service';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -26,7 +29,9 @@ import { UserModule } from './user/user.module';
       autoSchemaFile: join(process.cwd(), 'src/schema.gql')
     }),
     TaskModule,
-    UserModule
+    UserModule,
+    AuthModule
   ],
+  providers: [AuthResolver, AuthService],
 })
 export class AppModule {}

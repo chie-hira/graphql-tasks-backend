@@ -7,5 +7,6 @@ import { UserService } from './user.service';
 @Module({
     imports: [TypeOrmModule.forFeature([User])],
     providers: [UserResolver, UserService],
+    exports: [UserService], // 認証を使うためにUserServiceをexport
 })
 export class UserModule {}
