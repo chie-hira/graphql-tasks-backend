@@ -5,23 +5,24 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { TaskModule } from './task/task.module';
 import { UserModule } from './user/user.module';
-import { AuthResolver } from './auth/auth.resolver';
-import { AuthService } from './auth/auth.service';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'mysql',          // 使用するデータベースのタイプ
-      host: 'localhost',      // データベースのホスト
+      type: 'mysql',
+      host: 'localhost',
       port: 3306,
       username: 'user',
       password: 'password',
       database: 'sample',
       entities: [__dirname + '/**/*.entity{.ts,.js}'], // エンティティのパス
       synchronize: false,
-      // アプリケーションを再起動するたびにエンティティを同期
-      // エンティティ名を修正したとき、古いエンティティ名のテーブルがそのまま残るため、falseにしてmigrateを使う
+      /**
+      * アプリケーションを再起動するたびにエンティティを同期
+      * エンティティ名を修正したとき、古いエンティティ名のテーブルがそのまま残るため
+      * falseにしてmigrateを使う
+      */
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
@@ -32,6 +33,11 @@ import { AuthModule } from './auth/auth.module';
     UserModule,
     AuthModule
   ],
-  providers: [AuthResolver, AuthService],
+  /**
+  * NestJSのデフォルトで集中型構成(app.module.tsでほとんどのプロバイダーを管理)を採用しているため
+  * providersが自動追加される
+  * サービスとリゾルバ作成時に自動追加されるproviderは削除する
+  * providersは各モジュールで定義する
+  */
 })
 export class AppModule {}
