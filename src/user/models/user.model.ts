@@ -1,22 +1,22 @@
-import { Field, HideField, Int, ObjectType } from "@nestjs/graphql";
+import { Field, HideField, Int, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
 export class UserModel {
-    @Field(() => Int)
-    id: number;
+  @Field(() => Int)
+  id: number;
 
-    @Field()
-    name: string;
+  @Field()
+  name: string;
 
-    @Field()
-    email: string;
+  @Field()
+  email: string;
 
-    @HideField()
-    password: string;
+  @HideField()
+  password: string;
 
-    @Field()
-    createdAt: Date;
+  @Field()
+  createdAt: Date;
 
-    @Field()
-    updatedAt: Date;
+  @Field()
+  updatedAt: Date;
 }

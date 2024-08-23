@@ -4,27 +4,34 @@ import { User } from '../../user/entities/user.entity';
 
 @Entity('tasks')
 export class Task {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    name: string;
+  @Column()
+  name: string;
 
-    @Column()
-    dueDate: string;
+  @Column()
+  dueDate: string;
 
-    @Column({default: TaskStatus.NOT_STARTED})
-    status: TaskStatus;
+  @Column({ default: TaskStatus.NOT_STARTED })
+  status: TaskStatus;
 
-    @Column({ nullable: true })
-    description?: string;
+  @Column({ nullable: true })
+  description?: string;
 
-    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-    createdAt: Date;
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
 
-    @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP', onUpdate: 'CURRENT_TIMESTAMP' })
-    updatedAt: Date;
+  @Column({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
+  })
+  updatedAt: Date;
 
-    @ManyToOne(() => User, user => user.tasks, { onDelete: 'CASCADE', nullable: false })
-    user: User;
+  @ManyToOne(() => User, (user) => user.tasks, {
+    onDelete: 'CASCADE',
+    nullable: false,
+  })
+  user: User;
 }

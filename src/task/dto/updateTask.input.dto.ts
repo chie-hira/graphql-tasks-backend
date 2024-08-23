@@ -6,7 +6,7 @@ import { TaskStatus } from '../enums/task.enum';
 export class UpdateTaskInput {
   @Field(() => Int)
   id: number;
-  
+
   // フィールドがnullでもOK、ただしフィールドがある場合は空を許可しない
   // IsOptionalデコレータを使用することで、フィールドがnullの場合はバリデーションをスキップする
   @Field({ nullable: true })
