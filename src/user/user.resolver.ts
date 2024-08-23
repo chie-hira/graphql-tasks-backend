@@ -10,18 +10,18 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
 @Resolver()
 export class UserResolver {
-    constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) {}
 
-    @Query(() => UserModel, { nullable: true })
-    @UseGuards(JwtAuthGuard) // 認証していないとアクセスできない
-    async getUser(@Args() GetUserArgs: GetUserArgs): Promise<User> {
-        return await this.userService.getUser(GetUserArgs.email);
-    }
+  @Query(() => UserModel, { nullable: true })
+  @UseGuards(JwtAuthGuard) // 認証していないとアクセスできない
+  async getUser(@Args() GetUserArgs: GetUserArgs): Promise<User> {
+    return await this.userService.getUser(GetUserArgs.email);
+  }
 
-    @Mutation(() => UserModel)
-    async createUser(
-        @Args('createUserInput') createUserInput: CreateUserInput,
-    ): Promise<UserModel> {
-        return await this.userService.createUser(createUserInput);
-    }
+  @Mutation(() => UserModel)
+  async createUser(
+    @Args('createUserInput') createUserInput: CreateUserInput,
+  ): Promise<UserModel> {
+    return await this.userService.createUser(createUserInput);
+  }
 }

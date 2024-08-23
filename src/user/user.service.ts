@@ -8,26 +8,26 @@ import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UserService {
-    constructor(
-        @InjectRepository(User)
-        private userRepository: Repository<User>,
-    ) {}
+  constructor(
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
+  ) {}
 
-    async getUser(email: string): Promise<User> {
-        return await this.userRepository.findOne({
-            where: { email },
-        });
-    }
+  async getUser(email: string): Promise<User> {
+    return await this.userRepository.findOne({
+      where: { email },
+    });
+  }
 
-    async createUser(createUserInput: CreateUserInput): Promise<UserModel> {
-        const { name, email, password } = createUserInput;
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = this.userRepository.create({
-            name,
-            email,
-            password: hashedPassword,
-        });
+  async createUser(createUserInput: CreateUserInput): Promise<UserModel> {
+    const { name, email, password } = createUserInput;
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = this.userRepository.create({
+      name,
+      email,
+      password: hashedPassword,
+    });
 
-        return await this.userRepository.save(newUser);
-    }
+    return await this.userRepository.save(newUser);
+  }
 }
